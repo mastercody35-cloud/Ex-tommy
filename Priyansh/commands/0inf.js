@@ -2,7 +2,7 @@ module.exports.config = {
   name: "inf",
   version: "1.0.1",
   hasPermssion: 0,
-  credits: "Siizz",
+  credits: "Siizz + edited by tOomy",
   description: "Admin and Bot info.",
   commandCategory: "...",
   cooldowns: 1,
@@ -33,13 +33,13 @@ module.exports.run = async function({ api, event, args, client, Users, Threads, 
 ╰─❍❍❍❍❍❍❍❍❍❍❍❍─╯
 
 🌸 𝗕𝗢𝗧 𝗡𝗔𝗠𝗘: ${global.config.BOTNAME}
-👑 𝗢𝗪𝗡𝗘𝗥: 𝐌 𝐓𝐀𝐋𝐇𝐀 (Credit)
+👑 𝗢𝗪𝗡𝗘𝗥: Ex TOomy (Credit)
 💘 𝗥𝗘𝗟𝗔𝗧𝗜𝗢𝗡𝗦𝗛𝗜𝗣:
 ʜᴀɪ ᴍᴇʀɪ ᴇᴋ ᴘʏᴀʀɪ ꜱɪ ꜱʜᴇʜᴢᴀᴅɪ 💞
 ᴊɪꜱᴇ ᴍᴀɪɴ ᴘʏᴀʀ ꜱᴇ ᴊᴀɴᴀ ᴋᴇʜᴛᴀ 💗
 
 🌐 𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞:
-📎 https://www.facebook.com/share/193GypVyJQ/
+📎 https://www.facebook.com/share/1BEmWChftj/
 
 🛠️ 𝗣𝗥𝗘𝗙𝗜𝗫: ${global.config.PREFIX}
 ⏳ 𝗨𝗣𝗧𝗜𝗠𝗘: ${hours}h ${minutes}m ${seconds}s
