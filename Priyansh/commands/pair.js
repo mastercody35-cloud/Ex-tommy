@@ -1,78 +1,156 @@
 module.exports.config = {
   name: "pair",
-  version: "1.0.0", 
+  version: "1.0.1",
   hasPermssion: 0,
-  credits: "🦋⃟⃟⃟⃟✮⃝Mr baloch + Modified by Toomy",
-  description: "pairing",
-  commandCategory: "Love", 
-  usages: "pair", 
-  cooldowns: 10
+  credits: "【☬☠𝔹𝔸𝕃𝕆ℂℍ™∆☠︎☬】",
+  description: "Pair love 💘",
+  commandCategory: "For users",
+  cooldowns: 5,
+  dependencies: {
+    "axios": "",
+    "fs-extra": "",
+    "jimp": ""
+  }
 };
 
-module.exports.run = async function({ api, event, Threads, Users }) {
-  const axios = global.nodemodule["axios"];
+async function makeImage({ one, two }) {
   const fs = global.nodemodule["fs-extra"];
+  const path = global.nodemodule["path"];
+  const axios = global.nodemodule["axios"];
+  const jimp = global.nodemodule["jimp"];
+  const __root = path.resolve(__dirname, "cache", "canvas");
 
-  var { participantIDs } = (await Threads.getData(event.threadID)).threadInfo;
-  var tle = Math.floor(Math.random() * 101);
-  var namee = (await Users.getData(event.senderID)).name;
-  const botID = api.getCurrentUserID();
-  const listUserID = event.participantIDs.filter(ID => ID != botID && ID != event.senderID);
-  var id = listUserID[Math.floor(Math.random() * listUserID.length)];
-  var name = (await Users.getData(id)).name;
-  var arraytag = [];
+  if (!fs.existsSync(__root)) fs.mkdirSync(__root, { recursive: true });
 
-  const gifCute = [
-    "https://i.pinimg.com/originals/42/9a/89/429a890a39e70d522d52c7e52bce8535.gif",
-    "https://i.imgur.com/HvPID5q.gif",
-    "https://i.pinimg.com/originals/9c/94/78/9c9478bb26b2160733ce0c10a0e10d10.gif",
-    "https://i.pinimg.com/originals/9d/0d/38/9d0d38c79b9fcf05f3ed71697039d27a.gif",
-    "https://i.imgur.com/BWji8Em.gif",
-    "https://i.imgur.com/ubJ31Mz.gif"
-  ];
+  // 👉 Yaha apna template link lagao (1365x768 wali image)
+  const pairingImgUrl = "https://i.ibb.co/VYsvHF1s/20250819-183725.jpg"; 
+  const baseImagePath = path.join(__root, "pairing_temp.png");
 
-  arraytag.push({ id: event.senderID, tag: namee });
-  arraytag.push({ id: id, tag: name });
+  try {
+    const baseImageBuffer = (await axios.get(pairingImgUrl, { responseType: 'arraybuffer' })).data;
+    fs.writeFileSync(baseImagePath, Buffer.from(baseImageBuffer, 'binary'));
+  } catch (error) {
+    console.error("Error downloading base image:", error.message);
+    throw new Error("Base image download nahi ho payi ❌");
+  }
 
-  // Load images
-  let Avatar = (await axios.get(`https://graph.facebook.com/${event.senderID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: "arraybuffer" })).data;
-  fs.writeFileSync(__dirname + "/cache/avt.png", Buffer.from(Avatar, "utf-8"));
+  let pairing_img = await jimp.read(baseImagePath);
+  let pathImg = path.join(__root, `pairing${one}${two}.png`);
+  let avatarOne = path.join(__root, `avt${one}.png`);
+  let avatarTwo = path.join(__root, `avt${two}.png`);
 
-  let gifLove = (await axios.get(gifCute[Math.floor(Math.random() * gifCute.length)], { responseType: "arraybuffer" })).data;
-  fs.writeFileSync(__dirname + "/cache/giflove.png", Buffer.from(gifLove, "utf-8"));
-
-  let Avatar2 = (await axios.get(`https://graph.facebook.com/${id}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: "arraybuffer" })).data;
-  fs.writeFileSync(__dirname + "/cache/avt2.png", Buffer.from(Avatar2, "utf-8"));
-
-  var imglove = [
-    fs.createReadStream(__dirname + "/cache/avt.png"),
-    fs.createReadStream(__dirname + "/cache/giflove.png"),
-    fs.createReadStream(__dirname + "/cache/avt2.png")
-  ];
-
-  // Your custom Urdu poetry
-  const poetry = `✨ بِس اِک چھوٹی سی ہاں کَر دُو!! ✨  
-ہَمارے نام اِس طَرَح جَہاں کَر دُو_____💕  
-  
-🌹 وہ مُحَبّتیں جو تُمہارے دِل میں ہَیں!!!  
-زُباں پَر لاؤ اور بِیان کَر دُو____💗`;
-
-  var msg = {
-    body: `╭═══💖 𝐏𝐄𝐑𝐅𝐄𝐂𝐓 𝐏𝐀𝐈𝐑 💖═══╮
-
-🥀 𓆩 ${namee} 𓆪  
-━━━━━━━━━━━━━  
-🌹 𓆩 ${name} 𓆪  
-
-${poetry}
-
-🎯 𝐌𝐚𝐭𝐜𝐡 𝐏𝐞𝐫𝐜𝐞𝐧𝐭𝐚𝐠𝐞: ${tle}%
-
- 𝐎𝐰𝐧𝐞𝐫 【☬☠𝔹𝔸𝕃𝕆ℂℍ™∆☠︎☬】: 👑 cutèx 𝐁𝐨𝐭 💌
-╰═══════════════════╯`,
-    mentions: arraytag,
-    attachment: imglove
+  // 👉 Avatar download karna
+  const downloadAvatar = async (id, filePath) => {
+    try {
+      let buffer = (await axios.get(
+        `https://graph.facebook.com/${id}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
+        { responseType: 'arraybuffer' }
+      )).data;
+      fs.writeFileSync(filePath, Buffer.from(buffer, 'binary'));
+    } catch (error) {
+      console.error(`Avatar download error (user ${id}):`, error.message);
+      throw new Error(`Avatar ${id} ka download fail ❌`);
+    }
   };
 
-  return api.sendMessage(msg, event.threadID, event.messageID);
+  await downloadAvatar(one, avatarOne);
+  await downloadAvatar(two, avatarTwo);
+
+  let circleOne = await jimp.read(await circle(avatarOne));
+  let circleTwo = await jimp.read(await circle(avatarTwo));
+
+  // 🔥 FIXED size & position - dono DPs circle ke andar fit ho jayengi
+  pairing_img
+    .composite(circleOne.resize(175, 175), 43, 98)  // Left side circle
+    .composite(circleTwo.resize(175, 175), 419, 92); // Right side circle
+
+  let raw = await pairing_img.getBufferAsync("image/png");
+  fs.writeFileSync(pathImg, raw);
+
+  fs.unlinkSync(avatarOne);
+  fs.unlinkSync(avatarTwo);
+  fs.unlinkSync(baseImagePath);
+
+  return pathImg;
+}
+
+async function circle(image) {
+  const jimp = require("jimp");
+  image = await jimp.read(image);
+  image.circle();
+  return await image.getBufferAsync("image/png");
+}
+
+module.exports.run = async function ({ api, event }) {
+  const { threadID, messageID, senderID } = event;
+  const fs = require("fs-extra");
+
+  const tl = ['21%', '11%', '55%', '89%', '22%', '45%', '1%', '4%', '78%', '15%', '91%', '77%', '41%', '32%', '67%', '19%', '37%', '17%', '96%', '52%', '62%', '76%', '83%', '100%', '99%', "0%", "48%"];
+  const tle = tl[Math.floor(Math.random() * tl.length)];
+
+  try {
+    const userInfo = await api.getUserInfo(senderID);
+    const namee = userInfo[senderID].name;
+    const senderGender = userInfo[senderID].gender;
+
+    const threadInfo = await api.getThreadInfo(threadID);
+    let participantIDs = threadInfo.participantIDs.filter(id => id !== senderID);
+
+    if (participantIDs.length === 0) {
+      return api.sendMessage("Group me aur koi member hi nahi mila pairing ke liye 🤷‍♂️", threadID, messageID);
+    }
+
+    const participantsInfo = await api.getUserInfo(participantIDs);
+
+    let oppositeGenderIDs = [];
+    if (senderGender === 2) {
+      oppositeGenderIDs = participantIDs.filter(id => participantsInfo[id]?.gender === 1);
+    } else if (senderGender === 1) {
+      oppositeGenderIDs = participantIDs.filter(id => participantsInfo[id]?.gender === 2);
+    } else {
+      oppositeGenderIDs = participantIDs;
+    }
+
+    let randomID;
+    if (oppositeGenderIDs.length > 0) {
+      randomID = oppositeGenderIDs[Math.floor(Math.random() * oppositeGenderIDs.length)];
+    } else {
+      randomID = participantIDs[Math.floor(Math.random() * participantIDs.length)];
+    }
+
+    const partnerInfo = await api.getUserInfo(randomID);
+    const name = partnerInfo[randomID].name;
+
+    const arraytag = [
+      { id: senderID, tag: namee },
+      { id: randomID, tag: name }
+    ];
+
+    const one = senderID, two = randomID;
+
+    return makeImage({ one, two }).then(path =>
+      api.sendMessage({
+        body: `‎𝐎𝐰𝐧𝐞𝐫 ➻ 🌹 🦋⃟⃟⃟⃟✮⃝Mr baloch 🌹
+
+⎯ⷨ͢⟵͇̽💗⃪꯭ⷯ༆⁂𝄄❘⍣ . . 𝐀𝐧𝐤𝐡𝐨 𝐦𝐞 𝐛𝐚𝐬𝐚𝐥𝐮 𝐭𝐮𝐣𝐡𝐤𝐨 ..
+𝐒𝐡𝐞𝐞𝐬𝐡𝐞 𝐦𝐞 𝐭𝐞𝐫𝐚𝐝𝐞𝐞𝐝𝐚𝐫 𝐡𝐨 ..
+𝐀𝐤 𝐰𝐚𝐪𝐭 𝐞𝐬𝐚 𝐚𝐲𝐞 𝐣𝐢𝐧𝐝𝐠𝐢 𝐦𝐞 ..
+𝐭𝐮𝐣𝐡𝐤𝐨 𝐯 𝐡𝐮𝐦𝐬𝐞 𝐩𝐲𝐚𝐫 𝐡𝐨 ..
+
+⎯᪵⎯꯭̽𝆺꯭𝅥
+
+➻ 𝐍𝗔ɱɘ ✦ ${namee}
+
+➻ 𝐍𝗔ɱɘ ✦ ${name}
+
+🌸🍁The odds are: 〘${tle}%`,
+        mentions: arraytag,
+        attachment: fs.createReadStream(path)
+      }, threadID, () => fs.unlinkSync(path), messageID)
+    );
+
+  } catch (error) {
+    console.error("Pair command error:", error.message);
+    return api.sendMessage("Error aaya pairing me ❌ Baad me try karo!", threadID, messageID);
+  }
 };
