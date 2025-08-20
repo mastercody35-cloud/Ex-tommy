@@ -768,7 +768,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
 🌷 ʏᴏᴜ'ʀᴇ ᴍʏ ʜᴇᴀʀᴛʙᴇᴀᴛ, ʙᴀʙʏ~ 💞  
 ❣️ ꜱᴛᴀʏ ᴄᴜᴛᴇ, ꜱᴛᴀʏ ᴍɪɴᴇ 💘
 
-༄༚┋𝑴𝒂𝒅𝒆 𝒘𝒊𝒕𝒉 𝑳𝒐𝒗𝒆 𝒃𝒚 𝑻𝒂𝒍𝒉𝒂 𝑷𝒂𝒕𝒉𝒂𝒏┋༚༄`,
+༄༚┋𝑴𝒂𝒅𝒆 𝒘𝒊𝒕𝒉 𝑳𝒐𝒗𝒆 𝒃𝒚 tØxīīÇ bØīī ┋༚༄`,
 
     };
     return api.sendMessage(msg, threadID, messageID);
