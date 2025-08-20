@@ -3,76 +3,142 @@ const axios = require("axios");
 const { loadImage, createCanvas } = require("canvas");
 
 module.exports.config = {
-  name: "rankup",
-  version: "7.3.1",
-  hasPermssion: 1,
-  credits: "Mirai | Fixed by Talha",
-  description: "Stylish rank up system with auto image",
-  commandCategory: "Edit-IMG",
-  cooldowns: 2
+    name: "rankup",
+    version: "7.3.2",
+    hasPermssion: 1,
+    credits: "Priyansh Rajput + Fixed by tØxīīÇ",
+    description: "Announce rankup for each group, user",
+    commandCategory: "Edit-IMG",
+    dependencies: {
+        "fs-extra": "",
+        "axios": "",
+        "canvas": ""
+    },
+    cooldowns: 2,
 };
 
-module.exports.handleEvent = async function ({ api, event, Currencies, Users }) {
-  const { threadID, senderID } = event;
-  const expData = await Currencies.getData(senderID);
-  if (!expData || typeof expData.exp !== "number") return;
-  
-  let exp = expData.exp + 1;
-  await Currencies.setData(senderID, { exp });
+module.exports.handleEvent = async function ({ api, event, Currencies, Users, getText }) {
+    let { threadID, senderID } = event;
 
-  const curLevel = Math.floor((Math.sqrt(1 + (4 * exp / 3) + 1) / 2));
-  const level = Math.floor((Math.sqrt(1 + (4 * (exp + 1) / 3) + 1) / 2));
+    const rankupFolder = __dirname + "/noprefix/rankup/";
+    const cacheFolder = __dirname + "/cache/";
 
-  if (level <= curLevel || level === 1) return;
+    // Ensure folders exist
+    if (!fs.existsSync(rankupFolder)) fs.mkdirSync(rankupFolder, { recursive: true });
+    if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
 
-  const name = await Users.getNameUser(senderID);
-  const backgroundLinks = [
-    "https://i.imgur.com/tVCXB0q.jpeg",
-    "https://i.imgur.com/JBYox72.jpeg",
-    "https://i.imgur.com/SRRuSRk.jpeg",
-    "https://i.imgur.com/qhx5HLz.jpeg"
-  ];
-  const bgUrl = backgroundLinks[Math.floor(Math.random() * backgroundLinks.length)];
+    const pathImg = rankupFolder + "rankup.png";
+    const pathAvt1 = cacheFolder + "avtmot.png";
 
-  // Fetch profile pic
-  const avatar = await axios.get(`https://graph.facebook.com/${senderID}/picture?width=512&height=512&access_token=350685531728|62f8ce9f74b12f84c123cc23437a4a32`, { responseType: 'arraybuffer' });
-  fs.writeFileSync(__dirname + `/cache/avt_${senderID}.png`, Buffer.from(avatar.data, "utf-8"));
+    senderID = String(senderID);
+    threadID = String(threadID);
 
-  // Create Canvas
-  const canvas = createCanvas(800, 400);
-  const ctx = canvas.getContext("2d");
+    const thread = global.data.threadData.get(threadID) || {};
 
-  const background = await loadImage(bgUrl);
-  const avatarImg = await loadImage(__dirname + `/cache/avt_${senderID}.png`);
-  ctx.drawImage(background, 0, 0, 800, 400);
+    // Get EXP safely
+    let userData = await Currencies.getData(senderID);
+    let exp = (userData && typeof userData.exp === "number") ? userData.exp : 0;
+    exp++;
 
-  // Avatar Circle
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(400, 200, 90, 0, Math.PI * 2, true);
-  ctx.closePath();
-  ctx.clip();
-  ctx.drawImage(avatarImg, 310, 110, 180, 180);
-  ctx.restore();
+    if (isNaN(exp)) return;
 
-  // Text Style
-  ctx.font = "bold 30px Arial";
-  ctx.fillStyle = "#ffffff";
-  ctx.textAlign = "center";
-  ctx.fillText(`🌟 Rank Up 🌟`, 400, 50);
-  ctx.fillText(`Congratulations, ${name}!`, 400, 320);
-  ctx.fillText(`🔥 You reached level ${level} 🔥`, 400, 360);
+    // If rankup is disabled in thread
+    if (thread.rankup === false) {
+        await Currencies.setData(senderID, { exp });
+        return;
+    }
 
-  const path = __dirname + `/cache/rankup_${senderID}.png`;
-  const out = fs.createWriteStream(path);
-  const stream = canvas.createPNGStream();
-  stream.pipe(out);
-  out.on("finish", () => {
-    api.sendMessage({
-      body: `╔═══════ ೋღ 🌺 ღೋ ═══════╗\n🎉 *Rank Up Alert* 🎉\n\n✨ نام: ${name}\n📈 نیا لیول: ${level}\n\n🏆 محنت جاری رکھو، کامیابی تمھارے قدم چومے گی!\n╚═══════ ೋღ 🌺 ღೋ ═══════╝`,
-      attachment: fs.createReadStream(path)
-    }, threadID, () => fs.unlinkSync(path));
-  });
+    // Level calculation (XP → Level)
+    const curLevel = Math.floor(Math.sqrt(exp / 3));
+    const nextLevel = Math.floor(Math.sqrt((exp + 1) / 3));
 
-  fs.unlinkSync(__dirname + `/cache/avt_${senderID}.png`);
+    if (nextLevel > curLevel && nextLevel !== 1) {
+        const name = global.data.userName.get(senderID) || await Users.getNameUser(senderID);
+
+        let message = (typeof thread.customRankup === "string" && thread.customRankup.trim() !== "")
+            ? thread.customRankup
+            : getText("levelup");
+
+        message = message
+            .replace(/\{name}/g, name)
+            .replace(/\{level}/g, nextLevel);
+
+        // Backgrounds
+        const backgrounds = [
+            "https://i.imgur.com/tVCXB0q.jpeg",
+            "https://i.imgur.com/JBYox72.jpeg",
+            "https://i.imgur.com/SRRuSRk.jpeg",
+            "https://i.imgur.com/qhx5HLz.jpeg",
+            "https://i.imgur.com/kbB4AfZ.jpeg",
+            "https://i.imgur.com/9oxlszW.jpeg",
+            "https://i.imgur.com/cJj8LTu.jpeg",
+            "https://i.imgur.com/LHb5eJt.jpeg",
+        ];
+        const bgUrl = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+        // Fetch avatar
+        const getAvt = (await axios.get(
+            `https://graph.facebook.com/${senderID}/picture?width=720&height=720`,
+            { responseType: "arraybuffer" }
+        )).data;
+        fs.writeFileSync(pathAvt1, Buffer.from(getAvt, "utf-8"));
+
+        // Fetch background
+        const getBg = (await axios.get(bgUrl, { responseType: "arraybuffer" })).data;
+        fs.writeFileSync(pathImg, Buffer.from(getBg, "utf-8"));
+
+        // Draw
+        const baseImage = await loadImage(pathImg);
+        const avatar = await loadImage(pathAvt1);
+        const canvas = createCanvas(baseImage.width, baseImage.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+
+        ctx.save();
+        ctx.rotate(-25 * Math.PI / 180);
+        ctx.drawImage(avatar, 40, 710, 630, 700);
+        ctx.restore();
+
+        fs.writeFileSync(pathImg, canvas.toBuffer());
+        fs.removeSync(pathAvt1);
+
+        // Send message
+        api.sendMessage({
+            body: message,
+            mentions: [{ tag: name, id: senderID }],
+            attachment: fs.createReadStream(pathImg)
+        }, threadID, () => fs.unlinkSync(pathImg));
+    }
+
+    await Currencies.setData(senderID, { exp });
+    return;
+};
+
+module.exports.languages = {
+    "vi": {
+        "off": "𝗧𝗮̆́𝘁",
+        "on": "𝗕𝗮̣̂𝘁",
+        "successText": "𝐭𝐡𝐚̀𝐧𝐡 𝐜𝐨̂𝐧𝐠 𝐭𝐡𝐨̂𝐧𝐠 𝐛𝐚́𝐨 𝐫𝐚𝐧𝐤𝐮𝐩 ✨",
+        "levelup": "🌸 𝗞𝗶̃ 𝗻𝗮̆𝗻𝗴 𝘅𝗮̣𝗼 𝗹𝗼̂̀𝗻𝗻 𝗼̛̉ 𝗺𝗼̂𝗻 𝗽𝗵𝗮́𝗽 𝗵𝗮̂́𝗽 𝗱𝗶𝗲̂𝗺 𝗰𝘂̉𝗮 {name} 𝘃𝘂̛̀𝗮 𝗹𝗲̂𝗻 𝘁𝗼̛́𝗶 𝗹𝗲𝘃𝗲𝗹 {level} 🌸"
+    },
+    "en": {
+        "on": "on",
+        "off": "off",
+        "successText": "success notification rankup!",
+        "levelup": "💝🥀══𝐂𝐨𝐍𝐠𝐑𝐚𝐓𝐮𝐋𝐚𝐓𝐢𝐎𝐧══🥀🍀\n\n ⃟══•{name}══⃟❣\n\n𝐘𝐨𝐔𝐫 𝐋𝐞𝐕𝐞𝐋 𝐈𝐬 ➾ 🍫 {level}\n\n🩷🩵🩶🩷🩵🩶🩷🩵🩶🩷🩵🩶",
+    }
+};
+
+module.exports.run = async function ({ api, event, Threads, getText }) {
+    const { threadID, messageID } = event;
+    let data = (await Threads.getData(threadID)).data;
+
+    if (typeof data.rankup === "undefined" || data.rankup === false) data.rankup = true;
+    else data.rankup = false;
+
+    await Threads.setData(threadID, { data });
+    global.data.threadData.set(threadID, data);
+
+    return api.sendMessage(`${(data.rankup === true) ? getText("on") : getText("off")} ${getText("successText")}`, threadID, messageID);
 };
