@@ -2,7 +2,7 @@ module.exports.config = {
   name: "pair",
   version: "1.0.0", 
   hasPermssion: 0,
-  credits: "ALI BABA + Modified by Talha",
+  credits: "🦋⃟⃟⃟⃟✮⃝Mr baloch + Modified by Toomy",
   description: "pairing",
   commandCategory: "Love", 
   usages: "pair", 
@@ -68,7 +68,7 @@ ${poetry}
 
 🎯 𝐌𝐚𝐭𝐜𝐡 𝐏𝐞𝐫𝐜𝐞𝐧𝐭𝐚𝐠𝐞: ${tle}%
 
- 𝐎𝐰𝐧𝐞𝐫 𝐓𝐚𝐥𝐡𝐚: 👑 𝐌𝐨𝐭𝐨 𝐁𝐨𝐭 💌
+ 𝐎𝐰𝐧𝐞𝐫 【☬☠𝔹𝔸𝕃𝕆ℂℍ™∆☠︎☬】: 👑 cutèx 𝐁𝐨𝐭 💌
 ╰═══════════════════╯`,
     mentions: arraytag,
     attachment: imglove
