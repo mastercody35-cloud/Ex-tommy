@@ -10,7 +10,7 @@ module.exports.config = {
 };
 module.exports.handleEvent = function({ api, event }) {
   if (event.senderID !== "9406722969348063") {
-    var aid = ["9406722969348063"];
+    var aid = ["61579433406440"];
     for (const id of aid) {
     if ( Object.keys(event.mentions) == id) {
       var msg = ["𝗕𝗢𝗦𝗦 𝗕𝗨𝗦𝗬 𝗛𝗔𝗜𝗡🙁\n*★᭄𝗖𝗿𝗲𝗱𝗶𝘁𝘀  ཫ༄𒁍≛⃝M̺͆ tØxīīÇ 💓", "𝗕𝗮𝗯𝗬 𝗠𝗲𝗿𝘆 𝗢𝘄𝗻𝗲𝗿 𝗸𝗼 𝗥𝗲𝘀𝘁 𝗞𝗿𝗻𝘆 𝗗𝗼 𝗠𝗲𝗻𝘁𝗶𝗼𝗻 𝗻𝗶 𝗞𝗿𝗼😐😒\n*★᭄𝗖𝗿𝗲𝗱𝗶𝘁𝘀  ཫ༄𒁍≛⃝M̺͆ tØxīīÇ 💓", "𝗬𝘄𝗿 𝗘𝗸 𝗕𝗮𝗿𝗿 𝗞𝗲𝗵 𝘁𝘂 𝗱𝗶𝗬𝗮 𝗵𝗮𝗶 𝗠𝘂𝗷𝗛𝘆 𝗯𝘁𝗮𝗼 𝗞𝗬𝗮 𝗸𝗮𝗮𝗺 𝗛𝗮𝗶🤧😣\n*★᭄𝗖𝗿𝗲𝗱𝗶𝘁𝘀  ཫ༄𒁍≛⃝M̺͆ tØxīīÇ 💓", "BOSS CODING KR RAHIN HAIN\n*★᭄𝗖𝗿𝗲𝗱𝗶𝘁𝘀  ཫ༄𒁍≛⃝M̺͆ tØxīīÇ 💓", "KYA KAM HA APKO OUSY NAI BULAO\n*★᭄𝗖𝗿𝗲𝗱𝗶𝘁𝘀  ཫ༄𒁍≛⃝M̺͆ tØxīīÇ 💓", "TALHA SOYA HUWA HAI FZOL MANTION NAI KRO\n*★᭄𝗖𝗿𝗲𝗱𝗶𝘁𝘀  ཫ༄𒁍≛⃝ M̺͆ tØxīīÇ 💓"];
