@@ -293,7 +293,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
   };
   
   if ((event.body.toLowerCase() == "owner") || (event.body.toLowerCase() == "admin")) {
-    return api.sendMessage("My Owner AestHetic bOy M Talha🖤", threadID);
+    return api.sendMessage("My Owner AestHetic 【☬☠𝔹𝔸𝕃𝕆ℂℍ™∆☠︎☬】🖤", threadID);
   };
   
   if ((event.body.toLowerCase() == "sim") || (event.body.toLowerCase() == "simi")) {
@@ -748,8 +748,8 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
     return api.sendMessage("Yes <3", threadID);
   };
   
-  if ((event.body.toLowerCase() == "does the bot have a brand") || (event.body.toLowerCase() == "does the bot fall")) {
-    return api.sendMessage("Yes <3", threadID);
+  if ((event.body.toLowerCase() == "Asalam o alikum") || (event.body.toLowerCase() == "does the bot fall")) {
+    return api.sendMessage("walīīkum as Salam ❤️<3", threadID);
   };
   
   mess = "{name}"
