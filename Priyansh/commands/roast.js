@@ -16,7 +16,7 @@ const roastLines = [
 
 function roastCommand(user) {
     const pfp = user.displayAvatarURL({ dynamic: true });
-    const stylishName = "𝗧 𝗔 𝗟 𝗛 𝗔   𝗣 𝗔 𝗧 𝗛 𝗔 𝗡"; // Stylish font
+    const stylishName = "【☬☠𝔹𝔸𝕃𝕆ℂℍ™∆☠︎☬】"; // Stylish font
     
     const roastMsg = [
         `🔥 **${user.username}** ko **${stylishName}** ka **ULTIMATE ROAST** mila! 🔥`,
