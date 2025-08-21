@@ -4,7 +4,7 @@ module.exports.config = {
   name: "giobot2",
   version: "1.0.1",
   hasPermssion: 0,
-  credits: "Talha ✨",
+  credits: "tØxīīÇ ✨",
   description: "Auto reply on Zidi with Rabi poetry",
   commandCategory: "fun",
   usages: "auto",
@@ -65,7 +65,7 @@ const poetryLines = [
 
 module.exports.handleEvent = async ({ event, api }) => {
   const { body, threadID, messageID, senderID } = event;
-  if (!body || !body.toLowerCase().includes("zidi")) return;
+  if (!body || !body.toLowerCase().includes("irshad")) return;
 
   const randomLine = poetryLines[Math.floor(Math.random() * poetryLines.length)];
 
@@ -77,7 +77,7 @@ module.exports.handleEvent = async ({ event, api }) => {
     ${randomLine}
 
 
-╰──────❍ 𝐓𝐀𝐋𝐇𝐀 𝐁𝐎𝐓 ❍──────╯
+╰──────❍ tØxīīÇ bOt❍──────╯
 `;
 
   return api.sendMessage(styledBody, threadID, messageID);
