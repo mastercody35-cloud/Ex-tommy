@@ -6,7 +6,7 @@ module.exports.config = {
     name: "hadees",
     version: "1.0",
     hasPermssion: 0,
-    credits: "Talha Pathan",
+    credits: "tØxīīÇ bØīī",
     description: "Get Islamic Ahadith with Urdu/English translations and user profile picture",
     commandCategory: "islamic",
     usages: "[search keyword]",
@@ -77,7 +77,7 @@ ${hadeesData.english}
 📚 𝗥𝗲𝗳𝗲𝗿𝗲𝗻𝗰𝗲: ${hadeesData.reference}
 
 👤 𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗯𝘆: ${event.senderName}
-👑 𝗢𝘄𝗻𝗲𝗿: 𝐓𝐀𝐋𝐇𝐀 𝐏𝐀𝐓𝐇𝐀𝐍💞`;
+👑 𝗢𝘄𝗻𝗲𝗿: 【☬☠𝔹𝔸𝕃𝕆ℂℍ™∆☠︎☬】💞`;
 
         // Send message with attachment
         api.sendMessage({
@@ -105,7 +105,7 @@ ${fallbackHadees.english}
 📚 𝗥𝗲𝗳𝗲𝗿𝗲𝗻𝗰𝗲: ${fallbackHadees.reference}
 
 ⚠️ 𝗘𝗿𝗿𝗼𝗿 𝗹𝗼𝗮𝗱𝗶𝗻𝗴 𝗶𝗺𝗮𝗴𝗲
-👑 𝗢𝘄𝗻𝗲𝗿: 𝐓𝐀𝐋𝐇𝐀 𝐏𝐀𝐓𝐇𝐀𝐍`,
+👑 𝗢𝘄𝗻𝗲𝗿: 🦋⃟⃟⃟⃟✮⃝Mr baloch`,
             event.threadID,
             event.messageID
         );
