@@ -749,7 +749,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
   };
   
   if ((event.body.toLowerCase() == "Asalam o alikum") || (event.body.toLowerCase() == "does the bot fall")) {
-    return api.sendMessage("walīīkum as Salam ❤️<3", threadID);
+    return api.sendMessage("walīīkum as Salam ❤️ <3", threadID);
   };
   
   mess = "{name}"
