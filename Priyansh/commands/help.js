@@ -6,7 +6,7 @@ module.exports.config = {
   name: "help",
   version: "2.3.1",
   hasPermssion: 0,
-  credits: "Talha ✨",
+  credits: "🦋⃟⃟⃟⃟✮⃝Mr baloch ✨",
   description: "Stylish command list with 10/page",
   commandCategory: "system",
   usages: "help [command | page]",
@@ -35,11 +35,11 @@ module.exports.run = async ({ api, event, args }) => {
     return `✨ 𝙉𝘼𝙈𝙀: 『 ${cmd.config.name} 』\n${separator}`;
   }).join("\n");
 
-  const header = `╔═━━━━━━━━❖🌸❖━━━━━━━━═╗\n            🅾🆆🅽🅴🆁 🆃🅰🅻🅷🅰 \n╚═━━━━━━━━❖🌸❖━━━━━━━━═╝`;
+  const header = `╔═━━━━━━━━❖🌸❖━━━━━━━━═╗\n            🅾🆆🅽🅴🆁 𝄟✮⃝Dr✮⃝𝄟Bā£≛⃝ch \n╚═━━━━━━━━❖🌸❖━━━━━━━━═╝`;
 
-  const footer = `╭─『 💖 𝙊𝙒𝙉𝙀𝙍 𝙈𝙀𝙎𝙎𝘼𝙂𝙀 💖 』─╮\n│ ❝ 𝑻𝒉𝒊𝒔 𝒃𝒐𝒕 𝒊𝒔 𝒃𝒖𝒊𝒍𝒕 𝒇𝒐𝒓 𝑻𝒂𝒍𝒉𝒂 𝑷𝒂𝒕𝒉𝒂𝒏 ❞\n│ ✨ 𝑬𝒏𝒋𝒐𝒚 𝑼𝒔𝒊𝒏𝒈 𝑻𝒉𝒂 𝑩𝒐𝒕 & 𝑺𝒑𝒓𝒆𝒂𝒅 𝑳𝒐𝒗𝒆\n│ 🌐 fb.com/share/talha/\n╰─『 Page: ${page}/${totalPages} 』─╯`;
+  const footer = `╭─『 💖 𝙊𝙒𝙉𝙀𝙍 𝙈𝙀𝙎𝙎𝘼𝙂𝙀 💖 』─╮\n│ ❝ 𝑻𝒉𝒊𝒔 𝒃𝒐𝒕 𝒊𝒔 𝒃𝒖𝒊𝒍𝒕 𝒇𝒐𝒓 tØxīīÇ bØīī  ❞\n│ ✨ 𝑬𝒏𝒋𝒐𝒚 𝑼𝒔𝒊𝒏𝒈 𝑻𝒉𝒂 𝑩𝒐𝒕 & 𝑺𝒑𝒓𝒆𝒂𝒅 𝑳𝒐𝒗𝒆\n│ 🌐 fb.com/share/talha/\n╰─『 Page: ${page}/${totalPages} 』─╯`;
 
-  const imgUrl = "https://i.imgur.com/bVfAEoj.jpeg";
+  const imgUrl = "https://i.postimg.cc/y6XpGWSv/20250820-194753.jpg";
   const pathImg = __dirname + "/help.jpg";
 
   const writeImg = () => new Promise((resolve, reject) => {
