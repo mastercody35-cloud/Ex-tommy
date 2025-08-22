@@ -160,3 +160,23 @@ module.exports.handleEvent = async function ({ api, event }) {
     const records = getUserGroupRecords(senderID);
     if (records.length > 0) {
       con
+// ✅ Command runner
+module.exports.run = async function({ api, event, args }) {
+  const { threadID, messageID } = event;
+
+  if (args.length === 0) {
+    return api.sendMessage("⚙️ Use: *moto on OR *moto off", threadID, messageID);
+  }
+
+  if (args[0] === "on") {
+    motoActive = true;
+    return api.sendMessage("✅ Moto AI activated!", threadID, messageID);
+  }
+
+  if (args[0] === "off") {
+    motoActive = false;
+    return api.sendMessage("❌ Moto AI deactivated!", threadID, messageID);
+  }
+
+  return api.sendMessage("⚙️ Invalid usage! Use: *moto on/off", threadID, messageID);
+};
