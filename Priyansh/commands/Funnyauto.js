@@ -5,7 +5,7 @@ module.exports.config = {
   version: "3.0.0",
   hasPermssion: 0,
   credits: "Modified by tØxīīÇ",
-  description: "Auto funny message with GIF every 5 minutes (with ON/OFF)",
+  description: "Auto funny message with GIF every 2 minutes (with ON/OFF)",
   usePrefix: true, // ab prefix ke sath chalega e.g. "funnyauto on"
   commandCategory: "Auto",
   usages: "funnyauto on/off",
